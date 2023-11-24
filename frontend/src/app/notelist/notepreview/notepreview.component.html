@@ -1,0 +1,18 @@
+<mat-list-item class="height-fix">
+    <div *ngIf="note | isSomeAndNotNull; then trueBlock; else falseBlock"></div>
+    <ng-template #trueBlock>
+        <h2 class="title" (click)="noteTitleClicked.emit(note!.id)">{{ note!.title }}</h2>
+        <span class="date">Utworzono {{ simplifiedCreationDate()! }}</span>
+        <span class="date" *ngIf="note!.editedAt != null">(Edytowano {{ simplifiedEditionDate()! }})</span>
+        <br>
+        <div class="content">{{ note!.content }}</div>
+    </ng-template>
+
+    <ng-template #falseBlock>
+        <h2 class="rounded-rectangle title">------------------------------------------------</h2>
+        <span class="rounded-rectangle date">-------------------------------</span>
+        <br>
+        <div class="rounded-rectangle content">-----------------------------------------------------------------------------</div>
+        <div class="rounded-rectangle content">----------------------------------------------------------------</div>
+    </ng-template>
+</mat-list-item>

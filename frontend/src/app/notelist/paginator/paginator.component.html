@@ -1,0 +1,36 @@
+<div class="container">
+    <button
+        mat-raised-button
+        class="nominwidth"
+        color="basic"
+        [disabled]="isThisFirstPage()"
+        (click)="gotoFirstPage()"
+    >|&lt;</button>
+    <button
+        mat-raised-button
+        color="basic"
+        [disabled]="isThisFirstPage()"
+        (click)="gotoPreviousPage()"
+    >&lt;</button>
+
+    <input #pageinput class="pageinput" type="number" 
+        ng-value="in_specifiedPage" ng-bind="content_CurrentPage" [value]="currentPage"
+        min="1" [max]="maxPage" (keydown.enter)="gotoArbitraryPage()"/>
+
+    <div class="page-divider">/</div>
+
+    <input class="pageinput" type="number" disabled="true" [value]="maxPage"/>
+    
+    <button
+        mat-raised-button
+        color="basic"
+        [disabled]="isThisLastPage()"
+        (click)="gotoNextPage()"
+    >&gt;</button>
+    <button
+        mat-raised-button
+        color="basic"
+        [disabled]="isThisLastPage()"
+        (click)="gotoLastPage()"
+    >&gt;|</button>
+</div>

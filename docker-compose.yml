@@ -1,0 +1,71 @@
+version: "3.1"
+
+services:
+    backend:
+        container_name: noted-backend-dev
+        image: noted-backend-dev
+        build:
+            context: backend
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/noted
+        env_file:
+            - ./config/backend.secrets.default.env
+            - ./config/backend.secrets.env
+        ports:
+            - "8080:8080"
+        networks:
+            - "notednet-dev"
+    frontend:
+        container_name: noted-frontend-dev
+        image: noted-frontend-dev
+        build:
+            context: frontend
+            dockerfile: Dockerfile
+        ports:
+            - "4200:4200"
+        networks:
+            - "notednet-dev"
+        volumes:
+            - ./frontend:/app
+#    frontend:
+#        container_name: noted-frontend
+#        image: noted-frontend
+#        build:
+#            context: frontend/dist
+#            dockerfile: Dockerfile
+#        ports:
+#            - "4200:4200"
+#        networks:
+#            - "notednet-dev"
+    db:
+        container_name: noted-db-dev
+        image: postgres:16.1-alpine3.18
+        environment:
+            - POSTGRES_DB=noted
+        env_file:
+            - ./config/db.secrets.default.env
+            - ./config/db.secrets.env
+        ports:
+            - "5432:5432"
+        networks:
+            - "notednet-dev"
+    nginx:
+        container_name: noted-nginx-dev
+        image: noted-nginx-dev
+        build:
+            context: nginx
+            dockerfile: Dockerfile
+        depends_on:
+            - backend
+            - frontend
+        ports:
+            - "80:80"
+        networks:
+            - "notednet-dev"
+
+networks:
+    notednet-dev:
+        driver: bridge

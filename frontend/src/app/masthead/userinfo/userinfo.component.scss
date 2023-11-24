@@ -1,0 +1,58 @@
+$font-color: inherit;
+$column-gap: 7pt;
+
+$fullname-font-size: 12pt;
+$handle-font-size: 10pt;
+
+$fullname-row-size: $fullname-font-size + 5pt;
+$handle-row-size: $handle-font-size + 3pt;
+
+$avatar-dim: 48px;
+$avatar-small-dim: calc($avatar-dim * 3 / 4);
+
+:host {
+    width: $avatar-dim;
+    height: $avatar-dim;
+}
+
+.avatar {
+    width: $avatar-dim;
+    height: $avatar-dim;
+    object-fit: cover;
+    clip-path: circle();
+    cursor: pointer;
+}
+
+.avatar-small {
+    width: $avatar-small-dim;
+    height: $avatar-small-dim;
+}
+
+.menu-userinfogrid {
+    display: grid;
+    grid-template-columns: $avatar-small-dim auto; 
+    column-gap: $column-gap;
+    margin-bottom: 3pt;
+
+    .c1 {
+        display: flex;
+        align-items: center;
+    }
+
+    .c2 {
+        align-items: center;
+
+        overflow: hidden;
+        word-wrap: break-word;
+
+        .fullname {
+            cursor: pointer;
+            font-size: $fullname-font-size;
+        }
+
+        .handle {
+            cursor: pointer;
+            font-size: $handle-font-size;
+        }
+    }
+}

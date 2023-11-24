@@ -1,0 +1,20 @@
+<div *ngIf="notesLoaded; then NOTE_LIST; else LOADING_SPINNER"></div>
+
+<ng-template #NOTE_LIST>
+    <mat-list *ngFor="let note of notes">
+    
+        <notepreview [note]="note" (noteTitleClicked)="gotoNote($event)"></notepreview>
+        <mat-divider></mat-divider>
+    
+    </mat-list>
+</ng-template>
+
+<ng-template #LOADING_SPINNER>
+    <mat-spinner class="center-spinner"></mat-spinner>
+</ng-template>
+
+
+<div class="center padding">
+    <paginator [currentPage]="page" [maxPage]="maxPage"></paginator>
+    <button mat-raised-button color="accent" (click)="mainService.redirectToCreateNotePage()">Nowa notatka +</button>
+</div>

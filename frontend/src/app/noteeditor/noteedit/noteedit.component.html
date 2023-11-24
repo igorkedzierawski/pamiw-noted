@@ -1,0 +1,18 @@
+<div class="container">
+
+    <div *ngIf="note | isSomeAndNotNull; then NOTE_EDITOR; else LOADING_SPINNER"></div>
+
+    <ng-template #NOTE_EDITOR>
+        <noteeditor
+            [title]="note!.title"
+            [content]="note!.content"
+            (abandonChanges)="abandonChanges()"
+            (saveChanges)="saveChanges($event)"
+        ></noteeditor>
+    </ng-template>
+
+    <ng-template #LOADING_SPINNER>
+        <mat-spinner class="center-spinner"></mat-spinner>
+    </ng-template>
+
+</div>

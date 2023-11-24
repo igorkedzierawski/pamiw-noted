@@ -1,0 +1,53 @@
+$default-font-size: 14pt;
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 5px;
+
+    input.pageinput {
+        text-align: center;
+        width: 50px;
+        height: 30px;
+        appearance: textfield;
+        font-size: $default-font-size;
+        background-color: transparent;
+        border-color: transparent;
+        color: black;
+    }
+
+    input.pageinput:focus { 
+        background-color: white;
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 10px #719ECE;
+    }
+
+    .page-divider {
+        font-size: $default-font-size;
+        font-weight: bold;
+    }
+
+    button {
+        font-size: $default-font-size;
+        min-width: 0px;
+    }
+
+}
+
+@media (max-width: 640px) {  
+    .container {
+        input.pageinput {
+            width: 44px;
+        }
+    }
+}
+
+@media (max-width: 340px) {  
+    .container {
+        input.pageinput {
+            width: 33px;
+        }
+    }
+}

@@ -1,0 +1,15 @@
+.page-middle {
+    max-width: 1080px;
+    margin: 0 auto;
+    background-color: #f0f0f0;
+    padding-bottom: 8pt;
+    border-bottom-left-radius: 8pt;
+    border-bottom-right-radius: 8pt;
+}
+
+@media (max-width: 1080px) {
+    .page-middle {
+        width: 100%;
+        max-width: none;
+    }
+}

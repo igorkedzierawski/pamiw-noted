@@ -1,0 +1,30 @@
+<div *ngIf="user != null; then trueBlock1"></div>
+<ng-template #trueBlock1>
+
+    <img class="avatar" [src]="user!.avatar_url" [matMenuTriggerFor]="menu">
+
+    <mat-menu #menu="matMenu">
+
+        <div mat-menu-item>
+            <div class="menu-userinfogrid">
+                <div class="c1">
+                    <img class="avatar avatar-small" [src]="user!.avatar_url">
+                </div>
+                <div class="c2">
+                    <span class="fullname">{{ user!.name }} {{ user!.surname }}</span>
+                    <br>
+                    <span class="handle">@{{ user!.username }}</span>
+                </div>
+            </div>
+        </div>
+    
+        <mat-divider></mat-divider>
+    
+        <button mat-menu-item (click)="logoutButtonClicked.emit()">
+            <mat-icon>logout</mat-icon>
+            <span>Wyloguj</span>
+        </button>
+    
+    </mat-menu>
+    
+</ng-template>

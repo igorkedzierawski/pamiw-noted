@@ -1,0 +1,41 @@
+.title {
+    margin: 0px;
+    width: fit-content;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.date {
+    margin: 0px;
+    margin-left: 4px;
+    font-size: 10pt;
+    color: grey;
+}
+.height-fix {
+    height: auto;
+}
+
+.content {
+    margin: 0px;
+    margin-bottom: 4px;
+    white-space: break-spaces;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+.rounded-rectangle {
+    background-color: rgb(214, 214, 214);
+    color: transparent;
+    border-radius: 20px;
+    cursor: default;
+    width: fit-content;
+}
+
+@media (max-width: 640px) {
+    .content {
+        -webkit-line-clamp: 3;
+    }
+}

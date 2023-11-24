@@ -1,0 +1,28 @@
+.container {
+    padding: 8px;
+    padding-bottom: 0px;
+
+    .content {
+        white-space: break-spaces;
+    }
+
+    .buttons-container {
+        text-align: right;
+        margin-bottom: 10px;
+    }
+
+    button {
+        margin-left: 8px;
+    }
+
+    .center-spinner {
+        margin: 0 auto;
+    }
+    
+    .date {
+        margin: 0px;
+        margin-left: 4px;
+        font-size: 10pt;
+        color: grey;
+    }
+}

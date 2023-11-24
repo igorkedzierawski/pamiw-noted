@@ -1,0 +1,22 @@
+<div>
+
+    <mat-form-field class="full-width">
+        <mat-label>Tytuł notatki</mat-label>
+        <input matInput [(ngModel)]="title" >
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Treść notatki</mat-label>
+      <textarea matInput [(ngModel)]="content"></textarea>
+    </mat-form-field>
+
+    <div class="buttons-container">
+        <button mat-raised-button color="warn" 
+            (click)="abandonChanges0()"
+        >Porzuć zmiany</button>
+        <button mat-raised-button color="basic" 
+            (click)="saveChanges0()"
+        >Zapisz</button>
+    </div>
+
+</div>

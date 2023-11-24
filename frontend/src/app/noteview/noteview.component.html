@@ -1,0 +1,27 @@
+<div class="container">
+
+    <div *ngIf="note != undefined; then PREVIEW; else LOADING_SPINNER"></div>
+    
+    <ng-template #PREVIEW>
+        <h1>{{ note!.title }}</h1>
+        <span class="date">Utworzono {{ simplifiedCreationDate()! }}</span>
+        <span class="date" *ngIf="note!.editedAt != null">(Edytowano {{ simplifiedEditionDate()! }})</span>
+        <div class="content">{{ note!.content }}</div>
+        <div class="buttons-container">
+            <button mat-raised-button color="warn"
+                (click)="deleteNote()"
+            >Usuń</button>
+            <button mat-raised-button color="basic"
+                (click)="editNote()"
+            >Edytuj</button>
+            <button mat-raised-button color="basic"
+                (click)="goBack()"
+            >Powrót</button>
+        </div>
+    </ng-template>
+
+    <ng-template #LOADING_SPINNER>
+        <mat-spinner class="center-spinner"></mat-spinner>
+    </ng-template>
+
+</div>

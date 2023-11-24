@@ -1,0 +1,26 @@
+<div class="container">
+
+    <h1>Noted</h1>
+    <h3>Aplikacja do notatek</h3>
+
+    <p>W tej aplikacji możesz:</p>
+    <ul>
+        <li>Tworzyć, edytować i usuwać notatki.</li>
+        <li>Stronicować utworzone notatki.</li>
+        <li>Zarejestrować się samemu i zalogować.</li>
+        <li>Zalogować się również przez Google lub GitHub.</li>
+    </ul>
+
+    <div [hidden]="!(mainService.user$ | async | isSomeAndNull)">
+        <button 
+            mat-raised-button color="accent" 
+            (click)="mainService.redirectToLoginPage()" 
+        >Zaloguj się</button>
+    </div>
+    <div [hidden]="!(mainService.user$ | async | isSomeAndNotNull)">
+        <button mat-raised-button color="accent" 
+        (click)="mainService.redirectToNotesPage()"
+    >Przejdź do notatek</button>
+    </div>
+
+</div>

@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row class="primary-row">
+
+        <span class="title" (click)="titleClicked()">Noted</span>
+
+        <button
+            class="mobile-no-width" 
+            [hidden]="(mainService.user$ | async) == null" 
+            mat-raised-button color="accent" 
+            (click)="mainService.redirectToCreateNotePage()" 
+            [innerText]="this.isMobileLayout ? '+' : 'Nowa notatka +'"
+        ></button>
+
+        <userinfo 
+            [hidden]="!(mainService.user$ | async | isSomeAndNotNull)" 
+            [user]="(mainService.user$ | async)!" 
+            (logoutButtonClicked)="mainService.performLogoutProcedure()" 
+            #userinfo
+        ></userinfo>
+          
+        <div [hidden]="!(mainService.user$ | async | isSomeAndNull)">
+            <button 
+                mat-raised-button color="accent" 
+                (click)="mainService.redirectToLoginPage()" 
+            >Zaloguj się</button>
+        </div>
+
+    </mat-toolbar-row>
+</mat-toolbar>
