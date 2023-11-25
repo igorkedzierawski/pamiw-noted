@@ -1,5 +1,4 @@
-version: "3.1"
-
+version: "2.1"
 services:
     backend:
         container_name: noted-backend-dev
@@ -8,12 +7,12 @@ services:
             context: backend
             dockerfile: Dockerfile
         depends_on:
-            - db
+            noted-db:
+                condition: service_healthy
         environment:
-            - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/noted
-        env_file:
-            - ./config/backend.secrets.default.env
-            - ./config/backend.secrets.env
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://noted-db:5432/noted
+            - POSTGRES_USER=${NOTED_DB_USER}
+            - POSTGRES_PASSWORD=${NOTED_DB_PASSWORD}
         ports:
             - "8080:8080"
         networks:
@@ -40,18 +39,64 @@ services:
 #            - "4200:4200"
 #        networks:
 #            - "notednet-dev"
-    db:
+    keycloak-initializer:
+        container_name: keycloak-initializer-dev
+        image: keycloak-initializer-dev
+        build:
+            context: keycloak-initializer
+            dockerfile: Dockerfile
+        depends_on:
+            keycloak:
+                condition: service_healthy
+        environment:
+            - KCCFG_OVERRIDE_EXISTING=true
+            - KC_SERVER_URL=http://keycloak:8080
+        env_file:
+            - oauth2secrets.env
+        networks:
+            - "notednet-dev"
+    keycloak:
+        container_name: keycloak-dev
+        image: quay.io/keycloak/keycloak:20.0.1
+        depends_on:
+            keycloak-db:
+                condition: service_healthy
+        environment:
+            - KC_DB=postgres
+            - KC_DB_URL=jdbc:postgresql://keycloak-db:5432/keycloak
+            - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+            - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+            - KC_DB_USERNAME=${KEYCLOAK_DB_USER}
+            - KC_DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
+        command: start-dev
+        ports:
+            - '8081:8080'
+        networks:
+            - "notednet-dev"
+        healthcheck:
+            test: "curl -f http://localhost:8080/admin || exit 1"
+    noted-db:
         container_name: noted-db-dev
         image: postgres:16.1-alpine3.18
         environment:
             - POSTGRES_DB=noted
-        env_file:
-            - ./config/db.secrets.default.env
-            - ./config/db.secrets.env
-        ports:
-            - "5432:5432"
+            - POSTGRES_USER=${NOTED_DB_USER}
+            - POSTGRES_PASSWORD=${NOTED_DB_PASSWORD}
         networks:
             - "notednet-dev"
+        healthcheck:
+            test: "pg_isready -U noted"
+    keycloak-db:
+        container_name: keycloak-db-dev
+        image: postgres:16.1-alpine3.18
+        environment:
+            - POSTGRES_DB=keycloak
+            - POSTGRES_USER=${KEYCLOAK_DB_USER}
+            - POSTGRES_PASSWORD=${KEYCLOAK_DB_PASSWORD}
+        networks:
+            - "notednet-dev"
+        healthcheck:
+            test: "pg_isready -U keycloak"
     nginx:
         container_name: noted-nginx-dev
         image: noted-nginx-dev

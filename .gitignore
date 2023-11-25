@@ -1,0 +1,3 @@
+#ignore envfile with oauth2 secrets
+oauth2secrets.env
+
