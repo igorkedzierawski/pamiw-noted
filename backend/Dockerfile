@@ -8,8 +8,6 @@ COPY settings.gradle .
 
 RUN gradle dependencies
 
-RUN gradle --daemon
-
 COPY src/ src/
 
 ENTRYPOINT ["gradle", "bootRun"]
