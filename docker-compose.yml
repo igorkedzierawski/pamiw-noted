@@ -5,7 +5,7 @@ services:
         image: noted-backend-dev
         build:
             context: backend
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.dev
         depends_on:
             noted-db:
                 condition: service_healthy
@@ -17,12 +17,14 @@ services:
             - "8080:8080"
         networks:
             - "notednet-dev"
+        volumes:
+            - ./backend:/app
     frontend:
         container_name: noted-frontend-dev
         image: noted-frontend-dev
         build:
             context: frontend
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.dev
         ports:
             - "4200:4200"
         networks:
