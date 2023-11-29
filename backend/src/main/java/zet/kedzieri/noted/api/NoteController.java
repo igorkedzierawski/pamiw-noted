@@ -4,9 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import zet.kedzieri.noted.config.jwtprocessing.JwtAuthed;
 import zet.kedzieri.noted.note.entity.dto.NoteDTO;
 import zet.kedzieri.noted.note.entity.form.NoteForm;
 import zet.kedzieri.noted.note.entity.dto.NoteDeletionConfirmationDTO;
@@ -31,7 +31,7 @@ public class NoteController {
     @ResponseBody
     @PostMapping(value = "create", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public NoteDTO create(
-            @AuthenticationPrincipal NotedUser user,
+            @JwtAuthed NotedUser user,
             @RequestBody @Validated({CreatingNote.class}) NoteForm form
     ) {
         return NoteDTO.from(noteService.createNote(user, form.getTitle(), form.getContent()));
@@ -42,7 +42,7 @@ public class NoteController {
     @ResponseBody
     @PatchMapping(value = "update", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public NoteDTO update(
-            @AuthenticationPrincipal NotedUser user,
+            @JwtAuthed NotedUser user,
             @RequestParam("id") long noteId,
             @RequestBody @Validated({EditingNote.class}) NoteForm form
     ) {
@@ -55,7 +55,7 @@ public class NoteController {
     @ResponseBody
     @DeleteMapping(value = "delete", produces = APPLICATION_JSON_VALUE)
     public NoteDeletionConfirmationDTO delete(
-            @AuthenticationPrincipal NotedUser user,
+            @JwtAuthed NotedUser user,
             @RequestParam("id") long noteId
     ) {
         return NoteDeletionConfirmationDTO.from(noteService.deleteNote(user, noteId));
@@ -71,7 +71,7 @@ public class NoteController {
     @ResponseBody
     @GetMapping(value = "page", produces = APPLICATION_JSON_VALUE)
     public Page<NoteDTO> notesPage(
-            @AuthenticationPrincipal NotedUser user,
+            @JwtAuthed NotedUser user,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size
     ) {
@@ -87,7 +87,7 @@ public class NoteController {
     @ResponseBody
     @GetMapping(value = "get", produces = APPLICATION_JSON_VALUE)
     public NoteDTO note(
-            @AuthenticationPrincipal NotedUser user,
+            @JwtAuthed NotedUser user,
             @RequestParam("id") long noteId
     ) {
         return NoteDTO.from(noteService.getNoteById(user, noteId));

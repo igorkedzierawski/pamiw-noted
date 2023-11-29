@@ -4,6 +4,7 @@ import { LoggedUser } from './data/loggeduser';
 import { RequestEngine } from './requestengine';
 import { Router } from '@angular/router';
 import { isSome, isSomeAndNotNull } from '../option/option.module';
+import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,7 @@ export class MainService {
     public readonly isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
     constructor(
+        private readonly keycloak: KeycloakService,
         private readonly reqeng: RequestEngine,
         private readonly router: Router
     ) {
@@ -37,7 +39,7 @@ export class MainService {
     }
 
     public redirectToLoginPage() {
-        this.router.navigate(['/login']);
+        this.keycloak.login();
     }
 
     public redirectToNotesPage() {
@@ -53,7 +55,7 @@ export class MainService {
     }
 
     public performLogoutProcedure() {
-        window.location.href = "/api/v1/auth/logout";
+        this.keycloak.logout();
     }
 
 }
